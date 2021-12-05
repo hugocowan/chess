@@ -22,18 +22,16 @@ import { Options, Vue } from "vue-class-component";
 	},
 })
 export default class ChessBoard extends Vue {
-	public getSquares = (): { boardSquares: { colour: string; index: number }[] } => {
-		let boardSquares = [];
-		let colourA = "white";
-		let colourB = "black";
-		let oldcolourA = null;
+	public getSquares = (): { colour: string; index: number; }[] => {
+		let boardSquares = [],
+			colourA = "white",
+			colourB = "black",
+			oldcolourA = null;
 
 		for (let i = 0; i < 64; i++) {
 			if (i > 0 && i % 8 === 0) {
 				(oldcolourA = colourA), (colourA = colourB), (colourB = oldcolourA);
 			}
-
-			console.log(i, colourA, colourB);
 
 			boardSquares[i] = {
 				colour: i % 2 === 0 ? colourA : colourB,
@@ -41,11 +39,9 @@ export default class ChessBoard extends Vue {
 			};
 		}
 
-		return {
-			boardSquares,
-		};
+		return boardSquares;
 	};
-	private boardSquares = this.getSquares()["boardSquares"];
+	private boardSquares = this.getSquares();
 }
 </script>
 
