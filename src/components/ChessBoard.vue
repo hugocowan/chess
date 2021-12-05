@@ -22,7 +22,7 @@ import { Options, Vue } from "vue-class-component";
 	},
 })
 export default class ChessBoard extends Vue {
-	public getSquares = (): { colour: string; index: number; }[] => {
+	private getSquares = (): { colour: string; index: number; }[] => {
 		let boardSquares = [],
 			colourA = "white",
 			colourB = "black",
