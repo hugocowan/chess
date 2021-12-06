@@ -102,6 +102,7 @@ a {
 			right: 35%;
 			font-size: 11px;
 			padding-right: 5px;
+			user-select: none;
 		}
 	}
 }
