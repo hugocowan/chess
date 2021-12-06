@@ -14,6 +14,12 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import store from '@/store';
+
+console.log('state:', store.state);
+store.commit('changeBlackScore', 2);
+console.log('state:', store.state);
+
 
 @Options({
 	props: {
@@ -79,6 +85,7 @@ a {
 	.square {
 		height: calc(100% / 8);
 		width: calc(100% / 8);
+
 
 		&.white {
 			background: rgb(233, 200, 138);
