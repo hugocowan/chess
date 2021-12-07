@@ -1,24 +1,39 @@
 <template>
-  <div class="chessboard">
-    <div
-		v-for="square in boardSquares" 
-		v-bind:key="square.index" 
-		:class="`square ${square.colour} ${square.code}${square.index}`"
-	>
-		<span v-if="square.index === 1 || square.code === 'A'" >
-			{{ (square.code === 'A' && square.index === 1) ? `${square.code}${square.index}` : (square.code === 'A') ? square.index : square.code }}
-		</span> 
+	<div class="chessboard">
+		<div
+			v-for="square in boardSquares" 
+			v-bind:key="square.index" 
+			:class="`square ${square.colour} ${square.code}${square.index}`"
+		>
+			<div 
+				v-for="piece in chessPieces.filter(piece => piece.position === `${square.code}${square.index}`)"
+				v-bind:key="piece.position"
+				:class="`chessPiece ${piece.colour} ${piece.position} ${piece.type}`"
+			>
+				<!-- <img :src="BlackRook"> -->
+				<!-- <img :src="piece.svg"> -->
+				{{ piece.colour }} {{ piece.type }}
+			</div>
+
+			<span v-if="square.index === 1 || square.code === 'A'" >
+				{{ (square.code === 'A' && square.index === 1) ? `${square.code}${square.index}` : (square.code === 'A') ? square.index : square.code }}
+			</span>
+		</div>
+
+		
 	</div>
-  </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import store from '@/store';
+// import BlackRook from '@/assets/blackRook.svg';
+
+if (store.state.pieces.length === 0) store.commit('createStartingPosition');
+store.commit('changeBlackScore', 2);
 
 console.log('state:', store.state);
-store.commit('changeBlackScore', 2);
-console.log('state:', store.state);
+console.log(store.state.pieces);
 
 
 @Options({
@@ -30,6 +45,9 @@ console.log('state:', store.state);
 			console.log("hey", this.msg);
 		},
 	},
+	components: {
+		// BlackRook
+	}
 })
 export default class ChessBoard extends Vue {
 
@@ -62,6 +80,7 @@ export default class ChessBoard extends Vue {
 	};
 
 	private boardSquares = this.getSquares();
+	private chessPieces = store.state.pieces;
 }
 </script>
 
@@ -90,7 +109,7 @@ a {
 		&.white {
 			background: rgb(233, 200, 138);
 
-			span {
+			span, .chessPiece {
 				color: rgb(117, 60, 13);
 			}
 		}
@@ -98,7 +117,7 @@ a {
 		&.black {
 			background: rgb(117, 60, 13);
 
-			span {
+			span, .chessPiece {
 				color: rgb(233, 200, 138);
 			}
 		}
@@ -111,6 +130,18 @@ a {
 			padding-right: 5px;
 			user-select: none;
 		}
+
+		.chessPiece {
+			height: 100%;
+			width: 100%;
+
+			img {
+				height: 100%;
+				width: 100%;
+			}
+		}
 	}
+
+	
 }
 </style>

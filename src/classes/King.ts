@@ -1,9 +1,12 @@
 import ChessPiece from "@/interfaces/ChessPiece";
 
 class King implements ChessPiece {
-    type = 'king';
+    type = 'King';
     taken = false;
-    points = 9001;
+    points = 0;
+    colour = '';
+    position = '';
+    svg = '';
 }
 
 export default King;
